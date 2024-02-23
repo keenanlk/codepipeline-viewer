@@ -6,11 +6,17 @@ import {
   AccordionTrigger,
 } from "../@/components/ui/accordion";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../@/components/ui/tooltip.tsx";
 
 type PipelineResponse = {
   name: string;
   stages: StageInfo[];
-}[];
+};
 
 type StageInfo = {
   name: string;
@@ -43,9 +49,11 @@ function App() {
   // const [pipelines, setPipelines] = useState<PipelineResponse>([]);
   async function getPipelines() {
     try {
-      const retrievedPipelines: PipelineResponse =
+      return testData;
+      const retrievedPipelines: PipelineResponse[] =
         await invoke("list_pipelines");
-      console.log("queried");
+      console.log(JSON.stringify(retrievedPipelines));
+      debugger;
       return retrievedPipelines;
     } catch (error) {
       debugger;
@@ -68,15 +76,84 @@ function App() {
         ? action.latest_execution.status
         : "Unknown",
     );
-    if (statuses.includes("Failed")) return "border-red-500";
+    if (statuses.includes("Failed")) return "bg-red-500";
     if (statuses.every((status) => status === "Succeeded"))
-      return "border-green-500";
-    if (statuses.includes("InProgress")) return "border-yellow-500";
-    return "border-gray-500"; // Unknown or mixed statuses
+      return "bg-green-500";
+    if (statuses.includes("InProgress")) return "bg-yellow-500";
+    return "bg-gray-500"; // Unknown or mixed statuses
   };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString();
+  };
+
+  const getPipelineStatusColor = (pipeline: PipelineResponse): string => {
+    const hasInProgress = pipeline.stages.some((stage) =>
+      stage.actions.some(
+        (action) => action.latest_execution.status === "InProgress",
+      ),
+    );
+    const hasFailed = pipeline.stages.some((stage) =>
+      stage.actions.some(
+        (action) => action.latest_execution.status === "Failed",
+      ),
+    );
+
+    // If any action in progress, outline yellow
+    if (hasInProgress) return "border-yellow-500";
+
+    // If the last execution failed, outline red
+    if (hasFailed) {
+      const lastStage = pipeline.stages[pipeline.stages.length - 1];
+      const lastAction = lastStage.actions[lastStage.actions.length - 1];
+      if (lastAction.latest_execution.status === "Failed")
+        return "border-red-500";
+    }
+
+    // If all stages passed, outline green
+    const allPassed = pipeline.stages.every((stage) =>
+      stage.actions.every(
+        (action) => action.latest_execution.status === "Succeeded",
+      ),
+    );
+    if (allPassed) return "border-green-500";
+
+    // Default outline color
+    return "border-gray-500";
+  };
+
+  const progrssBar = (pipeline: PipelineResponse) => {
+    debugger;
+    return (
+      <div className="flex justify-between items-center w-full w-full">
+        {pipeline.stages.map((stage, stageIndex) => (
+          <div
+            key={stageIndex}
+            className={`flex ${stageIndex < pipeline.stages.length - 1 ? "flex-grow" : ""}`}
+          >
+            {/* Circle for Stage Status */}
+            <div className="flex items-center">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    {" "}
+                    <div
+                      className={`h-4 w-4 rounded-full ${getStageBorderColor(stage)} flex-shrink-0`}
+                    ></div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <span className="text-sm font-bold ml-2">{stage.name}</span>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            {stageIndex < pipeline.stages.length - 1 && (
+              <div className="flex-grow mx-2 h-px bg-white self-center"></div>
+            )}
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -84,22 +161,15 @@ function App() {
       <Accordion type="single" collapsible>
         {pipelines?.map((pipeline, i) => (
           <AccordionItem
-            className="bg-slate-900  p-6 rounded-lg shadow-lg space-y-4 m-6"
+            className={`bg-slate-900  p-6 rounded-lg shadow-lg space-y-4 m-6 border ${getPipelineStatusColor(pipeline)}`}
             value={i.toString()}
           >
-            <AccordionTrigger>
-              <div>
-                <h1 className="text-xl font-bold mb-4">{pipeline.name}</h1>
-                <ul className="list list-inside flex space-x-3">
-                  {pipeline.stages.map((stage, index) => (
-                    <li
-                      key={index}
-                      className={`pl-2 border-l-4 ${getStageBorderColor(stage)}`}
-                    >
-                      {stage.name}
-                    </li>
-                  ))}
-                </ul>
+            <AccordionTrigger className="w-full">
+              <div className="flex flex-col w-full mr-10">
+                <h1 className="text-xl font-bold mb-4 text-left">
+                  {pipeline.name}
+                </h1>
+                {progrssBar(pipeline)}
               </div>
             </AccordionTrigger>
             <AccordionContent>
