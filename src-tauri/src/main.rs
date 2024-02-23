@@ -23,7 +23,6 @@ async fn list_pipelines() -> Result<JsonValue, String> {
                     let actions_info = state_response.stage_states().iter().find_map(|s| {
                         if s.stage_name.as_deref() == Some(&stage.name) {
                             Some(s.action_states().iter().map(|action_state| {
-                                // Ensure action_state is correctly referenced here
                                 let latest_execution_info = action_state.latest_execution.as_ref().map(|exec| {
                                     json!({
                                         "action_execution_id": exec.action_execution_id,
@@ -66,17 +65,12 @@ async fn list_pipelines() -> Result<JsonValue, String> {
                 }));
             } else {
                 println!("No details available for pipeline: {}", name);
-                // Skip this pipeline and proceed to the next
             }
         }
     }
 
     Ok(json!(pipelines_info))
 }
-
-
-
-
 
 fn main() {
     tauri::Builder::default()
