@@ -1,5 +1,4 @@
 import { invoke } from "@tauri-apps/api/tauri";
-import { testData } from "./test-data.ts";
 
 export type PipelineResponse = {
   name: string;
@@ -93,13 +92,66 @@ export const getTextStatusColor = (status?: string) => {
   }
 };
 
-export async function getPipelines() {
+export async function getPipelines(names: string[] | null | undefined) {
   try {
-    return testData;
-    const retrievedPipelines: PipelineResponse[] =
-      await invoke("list_pipelines");
+    console.log("getpipelines", names);
+    if (!names) return null;
+    // return testData;
+    debugger;
+    const retrievedPipelines: PipelineResponse[] = await invoke(
+      "list_pipelines",
+      { names },
+    );
+
     return retrievedPipelines;
   } catch (error) {
     console.error(error);
+  }
+}
+
+export async function getPipelineNamesFromAws() {
+  try {
+    const names: string[] = await invoke("get_pipeline_names");
+    return names.sort();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function addPipelineName(name: string) {
+  let names = getPipelinesNames();
+
+  if (!names) {
+    names = [name];
+  } else if (!names.includes(name)) {
+    names.push(name);
+  }
+
+  localStorage.setItem("pipelines", JSON.stringify(names));
+}
+
+export function removePipeline(pipelineName: string) {
+  let names = getPipelinesNames();
+
+  if (!names) return;
+
+  if (names.includes(pipelineName)) {
+    names = names.filter((n) => n !== pipelineName);
+  }
+
+  localStorage.setItem("pipelines", JSON.stringify(names));
+}
+
+export function getPipelinesNames() {
+  const data = localStorage.getItem("pipelines");
+
+  if (!data) return null;
+
+  try {
+    const pipelines: string[] = JSON.parse(data);
+    return pipelines;
+  } catch {
+    localStorage.removeItem("pipelines");
+    return null;
   }
 }

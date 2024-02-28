@@ -4,20 +4,48 @@ use aws_sdk_codepipeline::{Client, error::SdkError};
 use serde_json::{json, Value as JsonValue};
 use aws_sdk_codepipeline::types::{ActionOwner, ActionCategory, StageDeclaration, ActionState};
 use aws_sdk_codepipeline::operation::get_pipeline_state::GetPipelineStateOutput;
-
+use std::collections::HashSet;
+use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
+use tauri_plugin_positioner::{Position, WindowExt};
 
 #[command]
-async fn list_pipelines() -> Result<JsonValue, String> {
-    let config = from_env().load().await;
+async fn get_pipeline_names() -> Result<Vec<String>, String> {
+    let config = aws_config::load_from_env().await;
     let client = Client::new(&config);
 
     let list_response = client.list_pipelines().send().await.map_err(|e| e.to_string())?;
+
+    // Map over the pipelines to extract just the names, filtering out any None values
+    let pipeline_names: Vec<String> = list_response.pipelines() // Use an empty slice if None to safely handle missing pipelines
+        .iter()
+        .filter_map(|pipeline| pipeline.name.clone()) // Clone the name if it exists
+        .collect();
+
+    Ok(pipeline_names)
+}
+
+#[command]
+async fn list_pipelines(names: Vec<String>) -> Result<serde_json::Value, String> {
+    let config = aws_config::load_from_env().await;
+    let client = Client::new(&config);
+
+    let list_response = client.list_pipelines().send().await.map_err(|e| e.to_string())?;
+
+    // Convert the names Vec to a HashSet for efficient lookup
+    let names_set: HashSet<String> = names.into_iter().collect();
+
     let mut pipelines_info = Vec::new();
 
-    for pipeline in list_response.pipelines(){
+    // Directly iterate over the Option<&[PipelineSummary]> with iter() and flatten()
+    for pipeline in list_response.pipelines.iter().flatten() {
         if let Some(name) = &pipeline.name {
-            let pipeline_info = fetch_pipeline_details(&client, name).await?;
-            pipelines_info.push(pipeline_info);
+            // Check if the pipeline name is in the provided list of names
+            if names_set.contains(name) {
+                match fetch_pipeline_details(&client, name).await {
+                    Ok(pipeline_info) => pipelines_info.push(pipeline_info),
+                    Err(e) => return Err(e),
+                }
+            }
         }
     }
 
@@ -91,8 +119,77 @@ fn construct_latest_execution_info(action_state: &ActionState) -> JsonValue {
 }
 
 fn main() {
+    let quit = CustomMenuItem::new("quit".to_string(), "Quit").accelerator("Cmd+Q");
+    let report_an_issue = CustomMenuItem::new("reportAnIssue".to_string(), "Report an Issue");
+    let system_tray_menu = SystemTrayMenu::new().add_item(report_an_issue).add_native_item(SystemTrayMenuItem::Separator).add_item(quit);
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![list_pipelines])
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .invoke_handler(tauri::generate_handler![list_pipelines, get_pipeline_names])
+        .setup(|app| Ok(app.set_activation_policy(tauri::ActivationPolicy::Accessory)))
+                .plugin(tauri_plugin_positioner::init())
+                .system_tray(SystemTray::new().with_menu(system_tray_menu))
+                .on_system_tray_event(|app, event| {
+                    tauri_plugin_positioner::on_tray_event(app, &event);
+                    match event {
+                        SystemTrayEvent::LeftClick {
+                            position: _,
+                            size: _,
+                            ..
+                        } => {
+                            let window = app.get_window("main").unwrap();
+                            let _ = window.move_window(Position::TrayCenter);
+
+                            if window.is_visible().unwrap() {
+                                window.hide().unwrap();
+                            } else {
+                                window.show().unwrap();
+                                window.set_focus().unwrap();
+                            }
+                        }
+                        SystemTrayEvent::RightClick {
+                            position: _,
+                            size: _,
+                            ..
+                        } => {
+                            println!("system tray received a right click");
+                        }
+                        SystemTrayEvent::DoubleClick {
+                            position: _,
+                            size: _,
+                            ..
+                        } => {
+                            println!("system tray received a double click");
+                        }
+                        SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
+                            "reportAnIssue" => {
+                               let url = "https://github.com/keenanlk/epocher-v2/issues/new?assignees=&labels=user%20reported%20bug&projects=&template=bug_report.md&title=";
+
+                                   match webbrowser::open(url) {
+                                       Ok(_) => println!("Opened {} successfully.", url),
+                                       Err(e) => println!("Failed to open {}. Error: {}", url, e),
+                                   }
+                            }
+                            "quit" => {
+                                std::process::exit(0);
+                            }
+                            "hide" => {
+                                let window = app.get_window("main").unwrap();
+                                window.hide().unwrap();
+                            }
+                            _ => {}
+                        },
+                        _ => {}
+                    }
+                })
+                .on_window_event(|event| match event.event() {
+                    tauri::WindowEvent::Focused(is_focused) => {
+                        // detect click outside of the focused window and hide the app
+                        if !is_focused {
+                            event.window().hide().unwrap();
+                        }
+                    }
+                    _ => {}
+                })
+                .run(tauri::generate_context!())
+                .expect("error while running tauri application");
+
 }

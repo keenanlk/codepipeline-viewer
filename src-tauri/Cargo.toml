@@ -11,7 +11,7 @@ edition = "2021"
 tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
-tauri = { version = "1.5", features = ["shell-open"] }
+tauri = { version = "1.5", features = [ "updater", "macos-private-api", "system-tray", "shell-open"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 security-framework = "2.9.2"
@@ -20,6 +20,8 @@ aws-sdk-codepipeline = "1.15.0"
 log = "0.4.20"
 env_logger = "0.11.2"
 chrono = "0.4.34"
+webbrowser = "0.8.12"
+tauri-plugin-positioner = {version = "1.0.4", features = ["system-tray"] }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

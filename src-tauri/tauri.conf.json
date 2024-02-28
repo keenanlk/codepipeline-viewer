@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "codepipeline-viewer",
+    "productName": "Codepipeline Viewer",
     "version": "0.0.0"
   },
   "tauri": {
@@ -19,14 +19,34 @@
     },
     "windows": [
       {
-        "title": "codepipeline-viewer",
-        "width": 800,
-        "height": 600
+        "fullscreen": false,
+        "resizable": false,
+        "title": "Codepipeline Viewer",
+        "width": 360,
+        "height": 675,
+        "visible": false,
+        "hiddenTitle": true,
+        "decorations": false,
+        "transparent": true
       }
     ],
+    "updater": {
+      "active": true,
+      "endpoints": [
+        "https://raw.githubusercontent.com/keenanlk/epocher-v2/main/updater.json"
+      ],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDVGRjE5QkY4QzZFRDEzQzMKUldUREUrM0crSnZ4WDVvREhtTTVyQVFkMHY2Qi84eUNsM29oSHIrbFdVWDg0eUF0ZHlHQmpzT0cK"
+    },
+    "systemTray": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true,
+      "menuOnLeftClick": false
+    },
     "security": {
       "csp": null
     },
+    "macOSPrivateApi": true,
     "bundle": {
       "active": true,
       "targets": "all",

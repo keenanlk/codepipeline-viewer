@@ -7,7 +7,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../../../@/components/ui/tooltip.tsx";
+} from "@radix-ui/react-tooltip";
 
 export default function ProgressBar({
   pipeline,
