@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/tauri";
+import { testData } from "./test-data.ts";
 
 export type PipelineResponse = {
   name: string;
@@ -97,7 +98,6 @@ export async function getPipelines(names: string[] | null | undefined) {
     console.log("getpipelines", names);
     if (!names) return null;
     // return testData;
-    debugger;
     const retrievedPipelines: PipelineResponse[] = await invoke(
       "list_pipelines",
       { names },
