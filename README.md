@@ -1,7 +1,5 @@
-# Tauri + React + Typescript
+# Codepipeline Viewer
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+[WIP] - This projects built with React/Vite & Rust/Tuari allows you to view your coodepipeline statuses without needing to view go into the AWS console.
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+<img width="653" alt="Screenshot 2024-03-04 at 8 08 59 AM" src="https://github.com/keenanlk/codepipeline-viewer/assets/25515073/33657ca7-a671-4794-ab04-33cbee4107e7">
