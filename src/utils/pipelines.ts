@@ -1,5 +1,4 @@
 import { invoke } from "@tauri-apps/api/tauri";
-import { testData } from "./test-data.ts";
 
 export type PipelineResponse = {
   name: string;
