@@ -5,11 +5,11 @@
   "platforms": {
     "darwin-aarch64": {
       "signature": "",
-      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/tag/app-v1.0.0#:~:text=Codepipeline.Viewer_1.0.0_x64.dmg"
+      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.0.0/Codepipeline.Viewer_1.0.0_x64.dmg"
     },
     "darwin-x86_64": {
       "signature": "",
-      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/tag/app-v1.0.0#:~:text=4%20minutes%20ago-,Codepipeline.Viewer_x64.app.tar.gz,-7.41%20MB"
+      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.0.0/Codepipeline.Viewer_x64.app.tar.gz"
     }
   }
 }
