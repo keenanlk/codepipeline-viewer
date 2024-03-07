@@ -17,7 +17,7 @@ function App() {
       {!selectedPipelineNames?.length && !selectedPipelinesInfo?.length && (
         <NoPipelines />
       )}
-      {selectedPipelinesInfo?.length && (
+      {!!selectedPipelinesInfo?.length && (
         <div>
           <div className="m-6 flex justify-between">
             <h1>Pipelines</h1>

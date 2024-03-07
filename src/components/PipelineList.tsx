@@ -1,14 +1,14 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@radix-ui/react-accordion";
 import { getPipelineStatusColor } from "../utils/pipelines.ts";
 import PipelineHeader from "./pipeline/PipelineHeader.tsx";
 import PipelineStageInfo from "./pipeline/PipelineStageInfo.tsx";
 import { Separator } from "@radix-ui/react-separator";
 import { usePipelines } from "../utils/PipelinesContext.tsx";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./Accordion.tsx";
 
 export default function PipelineList() {
   const { selectedPipelinesInfo, removePipelineName } = usePipelines();
