@@ -8,7 +8,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./Accordion.tsx";
+} from "./shad/Accordion.tsx";
 
 export default function PipelineList() {
   const { selectedPipelinesInfo, removePipelineName } = usePipelines();

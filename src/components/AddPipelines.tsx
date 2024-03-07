@@ -8,8 +8,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./Drawer.tsx";
-import { ScrollArea } from "./ScrollArea.tsx";
+} from "./shad/Drawer.tsx";
+import { ScrollArea } from "./shad/ScrollArea.tsx";
 
 export default function AddPipeline() {
   const { availablePipelineNames, addPipelineName } = usePipelines();

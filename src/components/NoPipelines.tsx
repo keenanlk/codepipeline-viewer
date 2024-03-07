@@ -1,6 +1,6 @@
 import { Separator } from "@radix-ui/react-separator";
 import { usePipelines } from "../utils/PipelinesContext.tsx";
-import { ScrollArea } from "./ScrollArea.tsx";
+import { ScrollArea } from "./shad/ScrollArea.tsx";
 
 export default function NoPipelines() {
   const { pipelineNameFromAws, addPipelineName } = usePipelines();
