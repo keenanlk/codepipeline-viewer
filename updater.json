@@ -1,0 +1,15 @@
+{
+  "version": "v1.0.0",
+  "notes": "Initial release",
+  "pub_date": "2024-03-06T03:55:11.942Z",
+  "platforms": {
+    "darwin-aarch64": {
+      "signature": "",
+      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.0.0/Codepipeline.Viewer_1.0.0_x64.dmg"
+    },
+    "darwin-x86_64": {
+      "signature": "",
+      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.0.0/Codepipeline.Viewer_x64.app.tar.gz"
+    }
+  }
+}
