@@ -36,11 +36,11 @@ export type ErrorDetails = {
 export const getPipelineStatusColor = (pipeline: PipelineResponse): string => {
   const hasInProgress = pipeline.stages.some((stage) =>
     stage.actions.some(
-      (action) => action.latest_execution.status === "InProgress"
-    )
+      (action) => action.latest_execution.status === "InProgress",
+    ),
   );
   const hasFailed = pipeline.stages.some((stage) =>
-    stage.actions.some((action) => action.latest_execution.status === "Failed")
+    stage.actions.some((action) => action.latest_execution.status === "Failed"),
   );
 
   // If any action in progress, outline yellow
@@ -54,8 +54,8 @@ export const getPipelineStatusColor = (pipeline: PipelineResponse): string => {
   // If all stages passed, outline green
   const allPassed = pipeline.stages.every((stage) =>
     stage.actions.every(
-      (action) => action.latest_execution.status === "Succeeded"
-    )
+      (action) => action.latest_execution.status === "Succeeded",
+    ),
   );
   if (allPassed) return "border-green-500";
 
@@ -67,7 +67,7 @@ export const getStageBackgroundColor = (stage: StageInfo): string => {
   const statuses = stage.actions.map((action) =>
     action.latest_execution && "status" in action.latest_execution
       ? action.latest_execution.status
-      : "Unknown"
+      : "Unknown",
   );
   if (statuses.includes("Failed")) return "bg-red-500";
   if (statuses.every((status) => status === "Succeeded")) return "bg-green-500";
@@ -99,7 +99,7 @@ export async function getPipelines(names: string[] | null | undefined) {
     // return testData;
     const retrievedPipelines: PipelineResponse[] = await invoke(
       "list_pipelines",
-      { names }
+      { names },
     );
 
     return retrievedPipelines;

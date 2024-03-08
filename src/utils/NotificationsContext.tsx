@@ -28,9 +28,9 @@ export function NotificationsContextProvider({
     checkApproval();
   }, []);
 
-  async function send(pipelineName: string) {
-    await sendNotification({
-      title: "Pipeline Finished!",
+  function send(pipelineName: string) {
+    sendNotification({
+      title: `${pipelineName} Finished!`,
       body: `${pipelineName} has finished deploying!`,
     });
   }
