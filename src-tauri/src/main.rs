@@ -1,8 +1,7 @@
 use tauri::command;
-use aws_config::from_env;
-use aws_sdk_codepipeline::{Client, error::SdkError};
+use aws_sdk_codepipeline::Client;
 use serde_json::{json, Value as JsonValue};
-use aws_sdk_codepipeline::types::{ActionOwner, ActionCategory, StageDeclaration, ActionState};
+use aws_sdk_codepipeline::types::{StageDeclaration, ActionState};
 use aws_sdk_codepipeline::operation::get_pipeline_state::GetPipelineStateOutput;
 use std::collections::HashSet;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
@@ -10,7 +9,7 @@ use tauri_plugin_positioner::{Position, WindowExt};
 
 #[command]
 async fn get_pipeline_names() -> Result<Vec<String>, String> {
-    let config = aws_config::load_from_env().await;
+    let config = aws_config::load_defaults(aws_config::BehaviorVersion::latest()).await;
     let client = Client::new(&config);
 
     let list_response = client.list_pipelines().send().await.map_err(|e| e.to_string())?;
@@ -26,7 +25,7 @@ async fn get_pipeline_names() -> Result<Vec<String>, String> {
 
 #[command]
 async fn list_pipelines(names: Vec<String>) -> Result<serde_json::Value, String> {
-    let config = aws_config::load_from_env().await;
+    let config = aws_config::load_defaults(aws_config::BehaviorVersion::latest()).await;
     let client = Client::new(&config);
 
     let list_response = client.list_pipelines().send().await.map_err(|e| e.to_string())?;
