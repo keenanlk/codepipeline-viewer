@@ -6,6 +6,7 @@ import {
   getPipelinesNames,
   PipelineResponse,
 } from "./pipelines.ts";
+import { useNotifications } from "./NotificationsContext.tsx";
 
 type PipelinesContext = {
   selectedPipelineNames: string[] | null | undefined;
@@ -27,11 +28,31 @@ const PipelinesContext = createContext<PipelinesContext>({
   removePipelineName: async () => undefined,
 });
 
+function useIsWindowFocused() {
+  const [isFocused, setIsFocused] = useState(document.hasFocus());
+
+  useEffect(() => {
+    const onFocus = () => setIsFocused(true);
+    const onBlur = () => setIsFocused(false);
+
+    window.addEventListener("focus", onFocus);
+    window.addEventListener("blur", onBlur);
+
+    return () => {
+      window.removeEventListener("focus", onFocus);
+      window.removeEventListener("blur", onBlur);
+    };
+  }, []);
+
+  return isFocused;
+}
+
 export function PipelinesContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const notifications = useNotifications();
   const [availablePipelineNames, setAvailablePipelineNames] =
     useState<string[]>();
 
@@ -47,10 +68,14 @@ export function PipelinesContextProvider({
     // remove names from slectedpipeline names
     setAvailablePipelineNames(
       pipelineNameFromAws?.filter(
-        (name) => !selectedPipelineNames?.includes(name),
-      ),
+        (name) => !selectedPipelineNames?.includes(name)
+      )
     );
   }, [pipelineNameFromAws, selectedPipelineNames]);
+
+  const isWindowFocused = useIsWindowFocused();
+
+  const refetchInterval = isWindowFocused ? 30000 : 60000;
 
   const {
     data: selectedPipelinesInfo,
@@ -59,11 +84,29 @@ export function PipelinesContextProvider({
   } = useQuery({
     queryKey: ["pipelines", selectedPipelineNames],
     queryFn: () => getPipelines(selectedPipelineNames),
-    refetchInterval: 30000,
-    refetchIntervalInBackground: false,
+    refetchInterval,
+    refetchIntervalInBackground: true,
     refetchOnWindowFocus: "always",
     placeholderData: keepPreviousData,
   });
+
+  useEffect(() => {
+    selectedPipelinesInfo?.forEach((pipeline) => {
+      const lastStage = pipeline.stages.pop();
+      const lastAction = lastStage?.actions.pop();
+      const updatedDate = new Date(
+        String(lastAction?.latest_execution.last_status_change)
+      );
+      const now = new Date();
+
+      if (
+        lastAction?.latest_execution.status === "Succeeded" &&
+        now.getTime() - updatedDate.getTime() < 60 * 1000
+      ) {
+        notifications.send(pipeline.name);
+      }
+    });
+  }, [JSON.stringify(selectedPipelinesInfo)]);
 
   async function addPipelineName(name: string) {
     setSelectedPipelineNames((currentNames) => {
