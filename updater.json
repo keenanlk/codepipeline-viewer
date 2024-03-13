@@ -1,7 +1,7 @@
 {
-  "version": "v1.1.1",
+  "version": "v1.1.2",
   "notes": "Adds notifications on pipeline deploy and sets the app to startup at login.",
-  "pub_date": "2024-03-13T02:26:12.494Z",
+  "pub_date": "2024-03-13T02:52:46.158Z",
   "platforms": {
     "darwin-aarch64": {
       "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUREUrM0crSnZ4WDNEdEk5VnBLc1REblNpZ1FkNWp5Ri9EeDNucnpEb3pUUjZOZk1odnZHSlp5NzlhZlVQT3cyaEJWWXV0Q3hJWUNWWC93Si9Nd3RGeVBLcGNBODk5VHdvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzEwMjkyNDU5CWZpbGU6Q29kZXBpcGVsaW5lIFZpZXdlci5hcHAudGFyLmd6ClhtUkw2RkQrMjM3VTRmYVdrTjdaUGlBc1Y5SzJ4RXlVSSs3R2lxS0dWbnBoc0c5MjY0THNxcFZsNGtnRnhxN0svaU9YODMrRGJHM3RUTEQvMXdBTkJnPT0K",
