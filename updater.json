@@ -1,15 +1,15 @@
 {
-  "version": "v1.1.2",
-  "notes": "Adds notifications on pipeline deploy and sets the app to startup at login.",
-  "pub_date": "2024-03-13T02:52:46.158Z",
+  "version": "v1.1.3",
+  "notes": "Shows the app version in the system tray",
+  "pub_date": "2024-03-13T03:32:08.637Z",
   "platforms": {
     "darwin-aarch64": {
       "signature": "",
-      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.1.2/Codepipeline.Viewer_1.1.2_x64.dmg"
+      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.1.3/Codepipeline.Viewer_1.1.3_x64.dmg"
     },
     "darwin-x86_64": {
       "signature": "",
-      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.1.2/Codepipeline.Viewer_x64.app.tar.gz"
+      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.1.3/Codepipeline.Viewer_x64.app.tar.gz"
     }
   }
 }

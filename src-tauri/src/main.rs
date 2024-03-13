@@ -1,22 +1,30 @@
-use tauri::command;
+use auto_launch::AutoLaunch;
+use aws_sdk_codepipeline::operation::get_pipeline_state::GetPipelineStateOutput;
+use aws_sdk_codepipeline::types::{ActionState, StageDeclaration};
 use aws_sdk_codepipeline::Client;
 use serde_json::{json, Value as JsonValue};
-use aws_sdk_codepipeline::types::{StageDeclaration, ActionState};
-use aws_sdk_codepipeline::operation::get_pipeline_state::GetPipelineStateOutput;
 use std::collections::HashSet;
-use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
+use tauri::command;
+use tauri::{
+    CustomMenuItem, Manager, PackageInfo, SystemTray, SystemTrayEvent, SystemTrayMenu,
+    SystemTrayMenuItem,
+};
 use tauri_plugin_positioner::{Position, WindowExt};
-use auto_launch::AutoLaunch;
 
 #[command]
 async fn get_pipeline_names() -> Result<Vec<String>, String> {
     let config = aws_config::load_defaults(aws_config::BehaviorVersion::latest()).await;
     let client = Client::new(&config);
 
-    let list_response = client.list_pipelines().send().await.map_err(|e| e.to_string())?;
+    let list_response = client
+        .list_pipelines()
+        .send()
+        .await
+        .map_err(|e| e.to_string())?;
 
     // Map over the pipelines to extract just the names, filtering out any None values
-    let pipeline_names: Vec<String> = list_response.pipelines() // Use an empty slice if None to safely handle missing pipelines
+    let pipeline_names: Vec<String> = list_response
+        .pipelines() // Use an empty slice if None to safely handle missing pipelines
         .iter()
         .filter_map(|pipeline| pipeline.name.clone()) // Clone the name if it exists
         .collect();
@@ -29,7 +37,11 @@ async fn list_pipelines(names: Vec<String>) -> Result<serde_json::Value, String>
     let config = aws_config::load_defaults(aws_config::BehaviorVersion::latest()).await;
     let client = Client::new(&config);
 
-    let list_response = client.list_pipelines().send().await.map_err(|e| e.to_string())?;
+    let list_response = client
+        .list_pipelines()
+        .send()
+        .await
+        .map_err(|e| e.to_string())?;
 
     // Convert the names Vec to a HashSet for efficient lookup
     let names_set: HashSet<String> = names.into_iter().collect();
@@ -53,13 +65,25 @@ async fn list_pipelines(names: Vec<String>) -> Result<serde_json::Value, String>
 }
 
 async fn fetch_pipeline_details(client: &Client, name: &str) -> Result<JsonValue, String> {
-    let detail_response = client.get_pipeline().name(name).send().await.map_err(|e| e.to_string())?;
-    let state_response = client.get_pipeline_state().name(name).send().await.map_err(|e| e.to_string())?;
+    let detail_response = client
+        .get_pipeline()
+        .name(name)
+        .send()
+        .await
+        .map_err(|e| e.to_string())?;
+    let state_response = client
+        .get_pipeline_state()
+        .name(name)
+        .send()
+        .await
+        .map_err(|e| e.to_string())?;
 
     if let Some(pipeline_detail) = detail_response.pipeline() {
-        let stages_info = pipeline_detail.stages.iter().map(|stage| {
-            fetch_stage_details(stage, &state_response)
-        }).collect::<Vec<_>>();
+        let stages_info = pipeline_detail
+            .stages
+            .iter()
+            .map(|stage| fetch_stage_details(stage, &state_response))
+            .collect::<Vec<_>>();
 
         Ok(json!({
             "name": name,
@@ -71,17 +95,30 @@ async fn fetch_pipeline_details(client: &Client, name: &str) -> Result<JsonValue
     }
 }
 
-fn fetch_stage_details(stage: &StageDeclaration, state_response: &GetPipelineStateOutput) -> JsonValue {
-    let actions_info = state_response.stage_states().iter().find_map(|s| {
-        if s.stage_name.as_deref() == Some(&stage.name) {
-            // Assuming s.action_states is correctly a Vec<ActionState>, iterate over it directly
-            Some(s.action_states().iter().map(|action_state| { // action_state is now correctly typed as &ActionState
-                construct_latest_execution_info(action_state) // Correctly pass each &ActionState to the function
-            }).collect::<Vec<_>>())
-        } else {
-            None
-        }
-    }).unwrap_or_else(Vec::new);
+fn fetch_stage_details(
+    stage: &StageDeclaration,
+    state_response: &GetPipelineStateOutput,
+) -> JsonValue {
+    let actions_info = state_response
+        .stage_states()
+        .iter()
+        .find_map(|s| {
+            if s.stage_name.as_deref() == Some(&stage.name) {
+                // Assuming s.action_states is correctly a Vec<ActionState>, iterate over it directly
+                Some(
+                    s.action_states()
+                        .iter()
+                        .map(|action_state| {
+                            // action_state is now correctly typed as &ActionState
+                            construct_latest_execution_info(action_state) // Correctly pass each &ActionState to the function
+                        })
+                        .collect::<Vec<_>>(),
+                )
+            } else {
+                None
+            }
+        })
+        .unwrap_or_else(Vec::new);
 
     json!({
         "name": stage.name,
@@ -89,28 +126,30 @@ fn fetch_stage_details(stage: &StageDeclaration, state_response: &GetPipelineSta
     })
 }
 
-
-
 fn construct_latest_execution_info(action_state: &ActionState) -> JsonValue {
-    let latest_execution_info = action_state.latest_execution.as_ref().map(|exec| {
-        json!({
-            "action_execution_id": exec.action_execution_id,
-            "status": exec.status.as_ref().map(|s| s.as_str()),
-            "summary": exec.summary,
-            "last_status_change": exec.last_status_change.map(|d| d.to_string()),
-            "token": exec.token,
-            "last_updated_by": exec.last_updated_by,
-            "external_execution_id": exec.external_execution_id,
-            "external_execution_url": exec.external_execution_url,
-            "percent_complete": exec.percent_complete,
-            "error_details": exec.error_details.as_ref().map(|ed| {
-                json!({
-                    "code": ed.code,
-                    "message": ed.message,
-                })
-            }),
+    let latest_execution_info = action_state
+        .latest_execution
+        .as_ref()
+        .map(|exec| {
+            json!({
+                "action_execution_id": exec.action_execution_id,
+                "status": exec.status.as_ref().map(|s| s.as_str()),
+                "summary": exec.summary,
+                "last_status_change": exec.last_status_change.map(|d| d.to_string()),
+                "token": exec.token,
+                "last_updated_by": exec.last_updated_by,
+                "external_execution_id": exec.external_execution_id,
+                "external_execution_url": exec.external_execution_url,
+                "percent_complete": exec.percent_complete,
+                "error_details": exec.error_details.as_ref().map(|ed| {
+                    json!({
+                        "code": ed.code,
+                        "message": ed.message,
+                    })
+                }),
+            })
         })
-    }).unwrap_or(json!({}));
+        .unwrap_or(json!({}));
 
     json!({
         "name": action_state.action_name,
@@ -131,15 +170,31 @@ fn configure_autostart() {
 fn main() {
     let quit = CustomMenuItem::new("quit".to_string(), "Quit").accelerator("Cmd+Q");
     let report_an_issue = CustomMenuItem::new("reportAnIssue".to_string(), "Report an Issue");
-    let system_tray_menu = SystemTrayMenu::new().add_item(report_an_issue).add_native_item(SystemTrayMenuItem::Separator).add_item(quit);
-
+    let initial_system_tray_menu = SystemTrayMenu::new()
+        .add_item(quit.clone()) // Cloning might be necessary depending on how you manage ownership
+        .add_item(report_an_issue.clone());
     configure_autostart();
 
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![list_pipelines, get_pipeline_names])
-        .setup(|app| Ok(app.set_activation_policy(tauri::ActivationPolicy::Accessory)))
+        .system_tray(SystemTray::new().with_menu(initial_system_tray_menu))
+        .setup(|app| {
+            let package_info = app.package_info().clone();
+             let app_version = package_info.version.to_string();
+            let version_menu_item = CustomMenuItem::new("version".to_string(), format!("Version: {}", app_version)).disabled();
+            // Create the system tray menu and include the version item
+            let system_tray_menu = SystemTrayMenu::new()
+            .add_item(version_menu_item)
+            .add_native_item(SystemTrayMenuItem::Separator)
+            .add_item(quit) // Use the original items, no need to clone if you're not using them earlier
+            .add_item(report_an_issue);
+
+        // Update the system tray with the new menu
+        app.tray_handle().set_menu(system_tray_menu).expect("Failed to update system tray menu");
+
+            Ok(app.set_activation_policy(tauri::ActivationPolicy::Accessory))
+        })
                 .plugin(tauri_plugin_positioner::init())
-                .system_tray(SystemTray::new().with_menu(system_tray_menu))
                 .on_system_tray_event(|app, event| {
                     tauri_plugin_positioner::on_tray_event(app, &event);
                     match event {
@@ -204,5 +259,4 @@ fn main() {
                 })
                 .run(tauri::generate_context!())
                 .expect("error while running tauri application");
-
 }
