@@ -21,20 +21,26 @@ export default function AddPipeline() {
           <DrawerTitle>Pipelines</DrawerTitle>
         </DrawerHeader>
         <ScrollArea className="h-80 overflow-y-auto">
-          {availablePipelineNames?.map((name) => (
-            <DrawerClose>
-              <div
-                key={name} // Ensure key is here
-                className="hover:bg-accent flex flex-col w-screen items-start cursor-pointer p-4"
-                onClick={() => addPipelineName(name)}
-              >
-                <div>
-                  <p className="text-xs">{name}</p>
-                  <Separator className="h-0.5 bg-accent my-2" />
+          {availablePipelineNames?.length ? (
+            availablePipelineNames?.map((name) => (
+              <DrawerClose>
+                <div
+                  key={name} // Ensure key is here
+                  className="hover:bg-accent flex flex-col w-screen items-start cursor-pointer p-4"
+                  onClick={() => addPipelineName(name)}
+                >
+                  <div>
+                    <p className="text-xs">{name}</p>
+                    <Separator className="h-0.5 bg-accent my-2" />
+                  </div>
                 </div>
-              </div>
-            </DrawerClose>
-          ))}
+              </DrawerClose>
+            ))
+          ) : (
+            <div className="flex w-screen justify-center items-center p-4 text-gray-300">
+              <p>No pipelines available</p>
+            </div>
+          )}
         </ScrollArea>
       </DrawerContent>
     </Drawer>
