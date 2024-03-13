@@ -68,8 +68,8 @@ export function PipelinesContextProvider({
     // remove names from slectedpipeline names
     setAvailablePipelineNames(
       pipelineNameFromAws?.filter(
-        (name) => !selectedPipelineNames?.includes(name),
-      ),
+        (name) => !selectedPipelineNames?.includes(name)
+      )
     );
   }, [pipelineNameFromAws, selectedPipelineNames]);
 
@@ -92,11 +92,10 @@ export function PipelinesContextProvider({
 
   useEffect(() => {
     selectedPipelinesInfo?.forEach((pipeline) => {
-      const stagesCopy = pipeline.stages.slice();
-      const lastStage = stagesCopy.pop();
-      const lastAction = lastStage?.actions.pop();
+      const lastStage = pipeline.stages[pipeline.stages.length - 1];
+      const lastAction = lastStage.actions[lastStage.actions.length - 1];
       const updatedDate = new Date(
-        String(lastAction?.latest_execution.last_status_change),
+        String(lastAction?.latest_execution.last_status_change)
       );
       const now = new Date();
 

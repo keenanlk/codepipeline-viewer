@@ -6,6 +6,7 @@ use aws_sdk_codepipeline::operation::get_pipeline_state::GetPipelineStateOutput;
 use std::collections::HashSet;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
 use tauri_plugin_positioner::{Position, WindowExt};
+use auto_launch::AutoLaunch;
 
 #[command]
 async fn get_pipeline_names() -> Result<Vec<String>, String> {
@@ -117,10 +118,23 @@ fn construct_latest_execution_info(action_state: &ActionState) -> JsonValue {
     })
 }
 
+fn configure_autostart() {
+    let app_name = "Codepipeline Viewer";
+    let app_path = "/Applications/Codepipeline Viewer.app";
+    let auto = AutoLaunch::new(app_name, app_path, false, &[] as &[&str]);
+
+    // enable the auto launch
+    auto.enable().is_ok();
+    auto.is_enabled().unwrap();
+}
+
 fn main() {
     let quit = CustomMenuItem::new("quit".to_string(), "Quit").accelerator("Cmd+Q");
     let report_an_issue = CustomMenuItem::new("reportAnIssue".to_string(), "Report an Issue");
     let system_tray_menu = SystemTrayMenu::new().add_item(report_an_issue).add_native_item(SystemTrayMenuItem::Separator).add_item(quit);
+
+    configure_autostart();
+
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![list_pipelines, get_pipeline_names])
         .setup(|app| Ok(app.set_activation_policy(tauri::ActivationPolicy::Accessory)))
