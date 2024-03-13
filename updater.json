@@ -4,11 +4,11 @@
   "pub_date": "2024-03-13T03:32:08.637Z",
   "platforms": {
     "darwin-aarch64": {
-      "signature": "",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUREUrM0crSnZ4WCs5R2JDdmQ2TUw0cmVBMUcyL0xuc2ZBZVorQlFmZ1dYQnJqK3B4UE1VRklqVE9Zb3c1K2orWStxWHQ2bjkzcnRSMWd1Znh2dG51Nk5RV2RxQWNRNVFRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzEwMzAxMjcyCWZpbGU6Q29kZXBpcGVsaW5lIFZpZXdlci5hcHAudGFyLmd6CkFVWmlsdy85TUlYSDl4QVgyTDdhU2ZHYWpSeGZ1b0lvRDJEd1VnRVc2bkI4ZGtOZUpqbXVkTDF5SkF4ZHJGVnlXWW80VnBVVXRqcFBuZmcxTzJzS0N3PT0K",
       "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.1.3/Codepipeline.Viewer_1.1.3_x64.dmg"
     },
     "darwin-x86_64": {
-      "signature": "",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUREUrM0crSnZ4WCs5R2JDdmQ2TUw0cmVBMUcyL0xuc2ZBZVorQlFmZ1dYQnJqK3B4UE1VRklqVE9Zb3c1K2orWStxWHQ2bjkzcnRSMWd1Znh2dG51Nk5RV2RxQWNRNVFRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzEwMzAxMjcyCWZpbGU6Q29kZXBpcGVsaW5lIFZpZXdlci5hcHAudGFyLmd6CkFVWmlsdy85TUlYSDl4QVgyTDdhU2ZHYWpSeGZ1b0lvRDJEd1VnRVc2bkI4ZGtOZUpqbXVkTDF5SkF4ZHJGVnlXWW80VnBVVXRqcFBuZmcxTzJzS0N3PT0K",
       "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.1.3/Codepipeline.Viewer_x64.app.tar.gz"
     }
   }
