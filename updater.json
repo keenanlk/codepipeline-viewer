@@ -1,6 +1,6 @@
 {
   "version": "v1.1.4",
-  "notes": "Shows the app version in the system tray",
+  "notes": "Shows the latest commit message if it exists",
   "pub_date": "2024-03-15T00:53:33.668Z",
   "platforms": {
     "darwin-aarch64": {
