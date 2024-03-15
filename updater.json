@@ -1,15 +1,15 @@
 {
-  "version": "v1.1.3",
+  "version": "v1.1.4",
   "notes": "Shows the app version in the system tray",
-  "pub_date": "2024-03-13T03:32:08.637Z",
+  "pub_date": "2024-03-15T00:53:33.668Z",
   "platforms": {
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUREUrM0crSnZ4WCs5R2JDdmQ2TUw0cmVBMUcyL0xuc2ZBZVorQlFmZ1dYQnJqK3B4UE1VRklqVE9Zb3c1K2orWStxWHQ2bjkzcnRSMWd1Znh2dG51Nk5RV2RxQWNRNVFRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzEwMzAxMjcyCWZpbGU6Q29kZXBpcGVsaW5lIFZpZXdlci5hcHAudGFyLmd6CkFVWmlsdy85TUlYSDl4QVgyTDdhU2ZHYWpSeGZ1b0lvRDJEd1VnRVc2bkI4ZGtOZUpqbXVkTDF5SkF4ZHJGVnlXWW80VnBVVXRqcFBuZmcxTzJzS0N3PT0K",
-      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.1.3/Codepipeline.Viewer_1.1.3_x64.dmg"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUREUrM0crSnZ4WCtCSzhjRHhIeWtMRjg0S3VsL2taSCtXc215UkFKd1Q4TWsyU0FZMFQ2V0taQVNuWE1sU0NUNUVjVjB5MFYxZGdtQlNUMDZZZi9STGN1Z2xyVStDcGdzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzEwNDYzOTQ1CWZpbGU6Q29kZXBpcGVsaW5lIFZpZXdlci5hcHAudGFyLmd6ClprK3lkRVIwRlAvSTd0NGR6MG5sMjVRWW5UTExSb3RRVHNrbGVCUFVvMFhrQi9lRmxWMkpxQzc3VnJ6Y2dYMUJHbjhwSkd1bi9pRTV0UTFoYzdkcUNBPT0K",
+      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.1.4/Codepipeline.Viewer_1.1.4_x64.dmg"
     },
     "darwin-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUREUrM0crSnZ4WCs5R2JDdmQ2TUw0cmVBMUcyL0xuc2ZBZVorQlFmZ1dYQnJqK3B4UE1VRklqVE9Zb3c1K2orWStxWHQ2bjkzcnRSMWd1Znh2dG51Nk5RV2RxQWNRNVFRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzEwMzAxMjcyCWZpbGU6Q29kZXBpcGVsaW5lIFZpZXdlci5hcHAudGFyLmd6CkFVWmlsdy85TUlYSDl4QVgyTDdhU2ZHYWpSeGZ1b0lvRDJEd1VnRVc2bkI4ZGtOZUpqbXVkTDF5SkF4ZHJGVnlXWW80VnBVVXRqcFBuZmcxTzJzS0N3PT0K",
-      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.1.3/Codepipeline.Viewer_x64.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUREUrM0crSnZ4WCtCSzhjRHhIeWtMRjg0S3VsL2taSCtXc215UkFKd1Q4TWsyU0FZMFQ2V0taQVNuWE1sU0NUNUVjVjB5MFYxZGdtQlNUMDZZZi9STGN1Z2xyVStDcGdzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzEwNDYzOTQ1CWZpbGU6Q29kZXBpcGVsaW5lIFZpZXdlci5hcHAudGFyLmd6ClprK3lkRVIwRlAvSTd0NGR6MG5sMjVRWW5UTExSb3RRVHNrbGVCUFVvMFhrQi9lRmxWMkpxQzc3VnJ6Y2dYMUJHbjhwSkd1bi9pRTV0UTFoYzdkcUNBPT0K",
+      "url": "https://github.com/keenanlk/codepipeline-viewer/releases/download/app-v1.1.4/Codepipeline.Viewer_x64.app.tar.gz"
     }
   }
 }
