@@ -1,4 +1,7 @@
-import { getPipelineStatusColor } from "../utils/pipelines.ts";
+import {
+  PipelineResponse,
+  getPipelineStatusColor,
+} from "../utils/pipelines.ts";
 import PipelineHeader from "./pipeline/PipelineHeader.tsx";
 import PipelineStageInfo from "./pipeline/PipelineStageInfo.tsx";
 import { Separator } from "@radix-ui/react-separator";
@@ -12,6 +15,18 @@ import {
 
 export default function PipelineList() {
   const { selectedPipelinesInfo, removePipelineName } = usePipelines();
+
+  function getGithubCommit(pipeline: PipelineResponse) {
+    const firstStage = pipeline.stages[0];
+    const firstAction = firstStage.actions[0];
+    try {
+      const summary = JSON.parse(firstAction.latest_execution.summary || "");
+      return summary?.CommitMessage || null;
+    } catch {
+      return null;
+    }
+  }
+
   return (
     <Accordion type="single" collapsible>
       {selectedPipelinesInfo?.map((pipeline, i) => (
@@ -24,6 +39,14 @@ export default function PipelineList() {
           </AccordionTrigger>
           <AccordionContent className="px-6">
             <div>
+              {!!getGithubCommit(pipeline) && (
+                <p className="text-gray-100 text-[12px]">
+                  Latest Commit:{" "}
+                  <span className="italic text-gray-200">
+                    {getGithubCommit(pipeline)}
+                  </span>
+                </p>
+              )}
               {pipeline.stages.map((stage, stageIndex) => (
                 <>
                   <PipelineStageInfo stage={stage} key={stageIndex} />
