@@ -1,5 +1,19 @@
-# Codepipeline Viewer
+# CodePipeline Viewer
 
-[WIP] - This projects built with React/Vite & Rust/Tuari allows you to view your coodepipeline statuses without needing to view go into the AWS console.
+A native macOS menu bar app for monitoring your AWS CodePipeline statuses without opening the AWS console.
 
-<img width="653" alt="Screenshot 2024-03-04 at 8 08 59 AM" src="https://github.com/keenanlk/codepipeline-viewer/assets/25515073/33657ca7-a671-4794-ab04-33cbee4107e7">
+## Features
+
+- Lives in your menu bar for quick access
+- Monitor multiple pipelines at once
+- Real-time status updates with automatic polling
+- Native macOS notifications when pipelines complete
+- Right-click context menu to report issues or quit
+- Launches at login automatically
+
+## Requirements
+
+- macOS 14.0+
+- AWS credentials configured locally
+
+

@@ -1,0 +1,45 @@
+name: CodePipelineViewer
+options:
+  bundleIdPrefix: com.keenankaufman
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "16.0"
+  generateEmptyDirectories: true
+
+packages:
+  aws-sdk-swift:
+    url: https://github.com/awslabs/aws-sdk-swift.git
+    from: "1.0.0"
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle.git
+    from: "2.0.0"
+
+targets:
+  CodePipelineViewer:
+    type: application
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - CodePipelineViewer
+    dependencies:
+      - package: aws-sdk-swift
+        product: AWSCodePipeline
+      - package: Sparkle
+    settings:
+      base:
+        INFOPLIST_KEY_LSUIElement: YES
+        INFOPLIST_KEY_CFBundleDisplayName: "CodePipeline Viewer"
+        PRODUCT_BUNDLE_IDENTIFIER: com.keenankaufman.codepipeline-viewer
+        PRODUCT_NAME: "CodePipeline Viewer"
+        MARKETING_VERSION: "2.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_VERSION: "5.9"
+        CODE_SIGN_ENTITLEMENTS: ""
+        ENABLE_HARDENED_RUNTIME: YES
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        GENERATE_INFOPLIST_FILE: YES
+    entitlements:
+      path: CodePipelineViewer/Resources/CodePipelineViewer.entitlements
+      properties:
+        com.apple.security.network.client: true
+        com.apple.security.app-sandbox: false

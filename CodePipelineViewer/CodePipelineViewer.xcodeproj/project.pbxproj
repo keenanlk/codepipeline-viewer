@@ -1,0 +1,462 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		24220C581201217935FC6CFF /* Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3F232ABDDE6330083E25B9 /* Pipeline.swift */; };
+		2BD59A40885080B58F032F72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D067F46AE1E82FA58E505D7A /* AppDelegate.swift */; };
+		3A80EBAE15283F28DBC5784C /* PipelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1652460CD3A1629C0D41C7B2 /* PipelineViewModel.swift */; };
+		3F5504C1D2B090E84BD6E27F /* PipelineRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7D37FD4B89462D7ECCD974 /* PipelineRowView.swift */; };
+		43C2ECA0B3C165CA133D7D3E /* StageProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F7574BA676361832644847 /* StageProgressView.swift */; };
+		442DDEA0B5B6906B990871D3 /* PipelinePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAD7212E8A4297BE660213D /* PipelinePickerView.swift */; };
+		46C80B526F93DCFF056C7EE3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B5E31FAD05679EC2268B3B /* ContentView.swift */; };
+		502A6DD1414EE18EC4A4BBC2 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649C43FAE1A36D588797C608 /* EmptyStateView.swift */; };
+		670DD81F42B4F6F9C7998CD9 /* ActionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234E923D04947621C32380F9 /* ActionRowView.swift */; };
+		7A0C65F982EDA821BB6EC0D4 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 61A215AB20D17865AA217FFB /* Sparkle */; };
+		7B321B396F0BA5EDF31602DC /* AWSCodePipeline in Frameworks */ = {isa = PBXBuildFile; productRef = 5805D257161B7570F7E3CDF2 /* AWSCodePipeline */; };
+		7EAF2A179A411EFACDF489AB /* PipelineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E85F3A530EDEC6A6FF2D8EA /* PipelineListView.swift */; };
+		C53AD8ABB0A0EDBC2CD284F1 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49411993A35D67394FAAE1E /* NotificationService.swift */; };
+		D0715B744871A4FCAEE03263 /* PipelineStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7355BB9D9279C2E9939F2E95 /* PipelineStatus.swift */; };
+		E3C6910E89E3E8F8C09B4AC8 /* AWSCodePipelineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB5680139724164F204D42 /* AWSCodePipelineService.swift */; };
+		EDDBA685E56B58D8CFF0ED20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DD6F7F8DB83D7681D833D8E /* Assets.xcassets */; };
+		F529E3EAA285D80B510164B8 /* CodePipelineViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C059EC586D927030A6365669 /* CodePipelineViewerApp.swift */; };
+		FA72941DA3E25CC90C9B696A /* PipelineDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC676A5E81469E179165A32 /* PipelineDetailView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0DD6F7F8DB83D7681D833D8E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1652460CD3A1629C0D41C7B2 /* PipelineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineViewModel.swift; sourceTree = "<group>"; };
+		234E923D04947621C32380F9 /* ActionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRowView.swift; sourceTree = "<group>"; };
+		649C43FAE1A36D588797C608 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		68F7574BA676361832644847 /* StageProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageProgressView.swift; sourceTree = "<group>"; };
+		7355BB9D9279C2E9939F2E95 /* PipelineStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineStatus.swift; sourceTree = "<group>"; };
+		749B1A7B154347A4A4C9F8F1 /* CodePipelineViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodePipelineViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E85F3A530EDEC6A6FF2D8EA /* PipelineListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineListView.swift; sourceTree = "<group>"; };
+		7FAD7212E8A4297BE660213D /* PipelinePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelinePickerView.swift; sourceTree = "<group>"; };
+		80851C3C18F8F7DAA747F82D /* CodePipelineViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CodePipelineViewer.entitlements; sourceTree = "<group>"; };
+		80AB5680139724164F204D42 /* AWSCodePipelineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSCodePipelineService.swift; sourceTree = "<group>"; };
+		A2B5E31FAD05679EC2268B3B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BEC676A5E81469E179165A32 /* PipelineDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineDetailView.swift; sourceTree = "<group>"; };
+		C059EC586D927030A6365669 /* CodePipelineViewerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePipelineViewerApp.swift; sourceTree = "<group>"; };
+		D067F46AE1E82FA58E505D7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D49411993A35D67394FAAE1E /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		DC3F232ABDDE6330083E25B9 /* Pipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipeline.swift; sourceTree = "<group>"; };
+		FD7D37FD4B89462D7ECCD974 /* PipelineRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineRowView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2C423DABB46C471BAEB840F6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B321B396F0BA5EDF31602DC /* AWSCodePipeline in Frameworks */,
+				7A0C65F982EDA821BB6EC0D4 /* Sparkle in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4051335395610C3BFE0716B0 = {
+			isa = PBXGroup;
+			children = (
+				93ACED6E1DA90E283125F899 /* CodePipelineViewer */,
+				893E283596AEEC673F0369D5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4D5BFC0AC7D019FD63C3DF53 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				234E923D04947621C32380F9 /* ActionRowView.swift */,
+				A2B5E31FAD05679EC2268B3B /* ContentView.swift */,
+				649C43FAE1A36D588797C608 /* EmptyStateView.swift */,
+				BEC676A5E81469E179165A32 /* PipelineDetailView.swift */,
+				7E85F3A530EDEC6A6FF2D8EA /* PipelineListView.swift */,
+				7FAD7212E8A4297BE660213D /* PipelinePickerView.swift */,
+				FD7D37FD4B89462D7ECCD974 /* PipelineRowView.swift */,
+				68F7574BA676361832644847 /* StageProgressView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		655E470086A3879D58E110A4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0DD6F7F8DB83D7681D833D8E /* Assets.xcassets */,
+				80851C3C18F8F7DAA747F82D /* CodePipelineViewer.entitlements */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		75234CBD60751F2C98AC5B48 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DC3F232ABDDE6330083E25B9 /* Pipeline.swift */,
+				7355BB9D9279C2E9939F2E95 /* PipelineStatus.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		893E283596AEEC673F0369D5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				749B1A7B154347A4A4C9F8F1 /* CodePipelineViewer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8CB8300D6C38668AD5A7682C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				80AB5680139724164F204D42 /* AWSCodePipelineService.swift */,
+				D49411993A35D67394FAAE1E /* NotificationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		93ACED6E1DA90E283125F899 /* CodePipelineViewer */ = {
+			isa = PBXGroup;
+			children = (
+				D067F46AE1E82FA58E505D7A /* AppDelegate.swift */,
+				C059EC586D927030A6365669 /* CodePipelineViewerApp.swift */,
+				75234CBD60751F2C98AC5B48 /* Models */,
+				655E470086A3879D58E110A4 /* Resources */,
+				8CB8300D6C38668AD5A7682C /* Services */,
+				9B909E1B45CD34667019E376 /* ViewModels */,
+				4D5BFC0AC7D019FD63C3DF53 /* Views */,
+			);
+			path = CodePipelineViewer;
+			sourceTree = "<group>";
+		};
+		9B909E1B45CD34667019E376 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1652460CD3A1629C0D41C7B2 /* PipelineViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		021A8CF70FF7A9C71C901132 /* CodePipelineViewer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BDAC41346F2FC0B764205555 /* Build configuration list for PBXNativeTarget "CodePipelineViewer" */;
+			buildPhases = (
+				BF0DF94FAF6793FEC476ADAF /* Sources */,
+				B4C0D504620AF1824083D192 /* Resources */,
+				2C423DABB46C471BAEB840F6 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CodePipelineViewer;
+			packageProductDependencies = (
+				5805D257161B7570F7E3CDF2 /* AWSCodePipeline */,
+				61A215AB20D17865AA217FFB /* Sparkle */,
+			);
+			productName = CodePipelineViewer;
+			productReference = 749B1A7B154347A4A4C9F8F1 /* CodePipelineViewer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		78608EC43DA8FB41DD67B187 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = CD691C219D9A2CAFC8E52AC6 /* Build configuration list for PBXProject "CodePipelineViewer" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 4051335395610C3BFE0716B0;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4ED3BDBD6FA89667D50AB176 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				A9FD2799E30FDE6E0AEB9FD2 /* XCRemoteSwiftPackageReference "aws-sdk-swift" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 893E283596AEEC673F0369D5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				021A8CF70FF7A9C71C901132 /* CodePipelineViewer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B4C0D504620AF1824083D192 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDDBA685E56B58D8CFF0ED20 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BF0DF94FAF6793FEC476ADAF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3C6910E89E3E8F8C09B4AC8 /* AWSCodePipelineService.swift in Sources */,
+				670DD81F42B4F6F9C7998CD9 /* ActionRowView.swift in Sources */,
+				2BD59A40885080B58F032F72 /* AppDelegate.swift in Sources */,
+				F529E3EAA285D80B510164B8 /* CodePipelineViewerApp.swift in Sources */,
+				46C80B526F93DCFF056C7EE3 /* ContentView.swift in Sources */,
+				502A6DD1414EE18EC4A4BBC2 /* EmptyStateView.swift in Sources */,
+				C53AD8ABB0A0EDBC2CD284F1 /* NotificationService.swift in Sources */,
+				24220C581201217935FC6CFF /* Pipeline.swift in Sources */,
+				FA72941DA3E25CC90C9B696A /* PipelineDetailView.swift in Sources */,
+				7EAF2A179A411EFACDF489AB /* PipelineListView.swift in Sources */,
+				442DDEA0B5B6906B990871D3 /* PipelinePickerView.swift in Sources */,
+				3F5504C1D2B090E84BD6E27F /* PipelineRowView.swift in Sources */,
+				D0715B744871A4FCAEE03263 /* PipelineStatus.swift in Sources */,
+				3A80EBAE15283F28DBC5784C /* PipelineViewModel.swift in Sources */,
+				43C2ECA0B3C165CA133D7D3E /* StageProgressView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1A08B68AB71446260D831BF4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		6383AE4F011278EF6F91AE78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CodePipelineViewer/Resources/CodePipelineViewer.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "CodePipeline Viewer";
+				INFOPLIST_KEY_LSUIElement = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.keenankaufman.codepipeline-viewer";
+				PRODUCT_NAME = "CodePipeline Viewer";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		9037B7C3FFBA37163C823AB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		D384A4877A9710693E9AAA16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CodePipelineViewer/Resources/CodePipelineViewer.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "CodePipeline Viewer";
+				INFOPLIST_KEY_LSUIElement = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.keenankaufman.codepipeline-viewer";
+				PRODUCT_NAME = "CodePipeline Viewer";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BDAC41346F2FC0B764205555 /* Build configuration list for PBXNativeTarget "CodePipelineViewer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D384A4877A9710693E9AAA16 /* Debug */,
+				6383AE4F011278EF6F91AE78 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CD691C219D9A2CAFC8E52AC6 /* Build configuration list for PBXProject "CodePipelineViewer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A08B68AB71446260D831BF4 /* Debug */,
+				9037B7C3FFBA37163C823AB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4ED3BDBD6FA89667D50AB176 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		A9FD2799E30FDE6E0AEB9FD2 /* XCRemoteSwiftPackageReference "aws-sdk-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/awslabs/aws-sdk-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5805D257161B7570F7E3CDF2 /* AWSCodePipeline */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9FD2799E30FDE6E0AEB9FD2 /* XCRemoteSwiftPackageReference "aws-sdk-swift" */;
+			productName = AWSCodePipeline;
+		};
+		61A215AB20D17865AA217FFB /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4ED3BDBD6FA89667D50AB176 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 78608EC43DA8FB41DD67B187 /* Project object */;
+}
