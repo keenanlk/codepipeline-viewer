@@ -22,13 +22,6 @@ jobs:
         id: version
         run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.2"
-          bundler-cache: true
-          working-directory: CodePipelineViewer
-
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.app/Contents/Developer
 
@@ -38,26 +31,94 @@ jobs:
       - name: Generate Xcode project
         run: xcodegen generate
 
-      - name: Set up SSH for Match
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.MATCH_DEPLOY_KEY }}
-
-      - name: Build and notarize DMG
-        id: dmg
+      - name: Import certificate
         env:
-          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
-          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
-          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
-          RELEASE_VERSION: ${{ steps.version.outputs.VERSION }}
-        run: bundle exec fastlane github_release
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          CERT_PATH=$RUNNER_TEMP/certificate.p12
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
 
-      - name: Create GitHub Release
+          echo -n "$APPLE_CERTIFICATE" | base64 --decode -o $CERT_PATH
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security import $CERT_PATH -P "$APPLE_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+      - name: Update version
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          sed -i '' "s/MARKETING_VERSION: .*/MARKETING_VERSION: \"$VERSION\"/" project.yml
+          sed -i '' "s/CURRENT_PROJECT_VERSION: .*/CURRENT_PROJECT_VERSION: \"$(date +%Y%m%d%H%M%S)\"/" project.yml
+          xcodegen generate
+
+      - name: Build
+        run: |
+          xcodebuild -project CodePipelineViewer.xcodeproj \
+            -scheme CodePipelineViewer \
+            -configuration Release \
+            -archivePath build/CodePipelineViewer.xcarchive \
+            archive \
+            CODE_SIGN_IDENTITY="${{ secrets.APPLE_SIGNING_IDENTITY }}" \
+            DEVELOPMENT_TEAM="${{ secrets.APPLE_TEAM_ID }}"
+
+      - name: Export app
+        run: |
+          cat > build/ExportOptions.plist << 'PLIST'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>developer-id</string>
+            <key>teamID</key>
+            <string>${{ secrets.APPLE_TEAM_ID }}</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>signingCertificate</key>
+            <string>Developer ID Application</string>
+          </dict>
+          </plist>
+          PLIST
+
+          xcodebuild -exportArchive \
+            -archivePath build/CodePipelineViewer.xcarchive \
+            -exportOptionsPlist build/ExportOptions.plist \
+            -exportPath build/export
+
+      - name: Create DMG
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          hdiutil create \
+            -volname "CodePipeline Viewer" \
+            -srcfolder "build/export/CodePipeline Viewer.app" \
+            -ov -format UDZO \
+            "build/CodePipelineViewer-${VERSION}.dmg"
+
+      - name: Notarize DMG
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          xcrun notarytool submit "build/CodePipelineViewer-${VERSION}.dmg" \
+            --apple-id "$APPLE_ID" \
+            --password "$APPLE_PASSWORD" \
+            --team-id "$APPLE_TEAM_ID" \
+            --wait
+          xcrun stapler staple "build/CodePipelineViewer-${VERSION}.dmg"
+
+      - name: Upload release asset
         uses: softprops/action-gh-release@v2
         with:
           files: CodePipelineViewer/build/CodePipelineViewer-${{ steps.version.outputs.VERSION }}.dmg
           generate_release_notes: true
+
+      - name: Cleanup keychain
+        if: always()
+        run: security delete-keychain $RUNNER_TEMP/app-signing.keychain-db || true
