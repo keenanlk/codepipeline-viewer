@@ -49,11 +49,21 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
 
-      - name: Update version
+      - name: Update version and signing
+        env:
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: |
           VERSION=${{ steps.version.outputs.VERSION }}
           sed -i '' "s/MARKETING_VERSION: .*/MARKETING_VERSION: \"$VERSION\"/" project.yml
           sed -i '' "s/CURRENT_PROJECT_VERSION: .*/CURRENT_PROJECT_VERSION: \"$(date +%Y%m%d%H%M%S)\"/" project.yml
+          # Add signing settings to project.yml
+          sed -i '' "s/CODE_SIGN_ENTITLEMENTS: \"\"/CODE_SIGN_ENTITLEMENTS: \"\"/" project.yml
+          cat >> project.yml << YAML
+            CODE_SIGN_STYLE: Manual
+            CODE_SIGN_IDENTITY: "$APPLE_SIGNING_IDENTITY"
+            DEVELOPMENT_TEAM: "$APPLE_TEAM_ID"
+          YAML
           xcodegen generate
 
       - name: Build
@@ -62,13 +72,13 @@ jobs:
             -scheme CodePipelineViewer \
             -configuration Release \
             -archivePath build/CodePipelineViewer.xcarchive \
-            archive \
-            CODE_SIGN_IDENTITY="${{ secrets.APPLE_SIGNING_IDENTITY }}" \
-            DEVELOPMENT_TEAM="${{ secrets.APPLE_TEAM_ID }}"
+            archive
 
       - name: Export app
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: |
-          cat > build/ExportOptions.plist << 'PLIST'
+          cat > build/ExportOptions.plist << PLIST
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <plist version="1.0">
@@ -76,7 +86,7 @@ jobs:
             <key>method</key>
             <string>developer-id</string>
             <key>teamID</key>
-            <string>${{ secrets.APPLE_TEAM_ID }}</string>
+            <string>$APPLE_TEAM_ID</string>
             <key>signingStyle</key>
             <string>manual</string>
             <key>signingCertificate</key>
