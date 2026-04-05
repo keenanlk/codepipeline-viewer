@@ -57,13 +57,11 @@ jobs:
           VERSION=${{ steps.version.outputs.VERSION }}
           sed -i '' "s/MARKETING_VERSION: .*/MARKETING_VERSION: \"$VERSION\"/" project.yml
           sed -i '' "s/CURRENT_PROJECT_VERSION: .*/CURRENT_PROJECT_VERSION: \"$(date +%Y%m%d%H%M%S)\"/" project.yml
-          # Add signing settings to project.yml
-          sed -i '' "s/CODE_SIGN_ENTITLEMENTS: \"\"/CODE_SIGN_ENTITLEMENTS: \"\"/" project.yml
-          cat >> project.yml << YAML
-            CODE_SIGN_STYLE: Manual
-            CODE_SIGN_IDENTITY: "$APPLE_SIGNING_IDENTITY"
-            DEVELOPMENT_TEAM: "$APPLE_TEAM_ID"
-          YAML
+          sed -i '' "/CODE_SIGN_ENTITLEMENTS/a\\
+            CODE_SIGN_STYLE: Manual\\
+            CODE_SIGN_IDENTITY: \"$APPLE_SIGNING_IDENTITY\"\\
+            DEVELOPMENT_TEAM: \"$APPLE_TEAM_ID\"
+          " project.yml
           xcodegen generate
 
       - name: Build
